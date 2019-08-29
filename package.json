@@ -1,0 +1,14 @@
+{
+  "name": "rpg-bot",
+  "version": "1.0.0",
+  "description": "RPG discord bot",
+  "main": "bot.js",
+  "author": "Ethan Jurman",
+  "dependencies": {
+    "discord.js": "^11.5.1",
+    "esm": "^3.2.25"
+  },
+  "scripts": {
+    "test-game-logic": "node -r esm ./game/test.js"
+  }
+}
