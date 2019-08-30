@@ -15,6 +15,7 @@ export class Messenger {
     maxResponses = 1,
     callbackOnResponse = () => {},
     callbackOnFinish = () => {},
+    getCollector = () => {},
   }) {
     const messageToBuild = new Discord.RichEmbed().setColor(color);
     options.reduce((message, option) => {
@@ -46,22 +47,12 @@ export class Messenger {
           .then(() => message)
       )
       .then(message => {
-        message
-          .awaitReactions(reactionFilter(message), {
-            max: maxResponses,
-            time: 10000,
-            errors: ['time'],
-          })
-          .then(collection => {
-            callbackOnResponse(collection);
-          })
-          .catch(response => {
-            if (response.first) {
-              // is a collection
-              return callbackOnFinish(response);
-            }
-            console.error(response);
-          });
+        const collector = message.createReactionCollector(
+          reactionFilter(message)
+        );
+        collector.on('collect', callbackOnResponse);
+        collector.on('end', callbackOnFinish);
+        getCollector(collector);
       });
   }
 }

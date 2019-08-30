@@ -1,6 +1,7 @@
 export class GameRPG {
   constructor(messenger) {
     this.messenger = messenger;
+    this.collector = null;
   }
 
   startGame() {
@@ -43,12 +44,16 @@ export class GameRPG {
         },
       ],
       callbackOnResponse: response => {
-        console.log('RESPONSE');
-        console.log(response.reaction);
+        console.log('RESPONSE', response.emoji.name);
+        if (response.emoji.name === '🔥') {
+          this.collector.stop();
+        }
       },
-      callbackOnFinish: response => {
-        console.log('FINISHED');
-        console.log(response);
+      callbackOnFinish: collected => {
+        console.log('FINISHED', collected.size);
+      },
+      getCollector: collector => {
+        this.collector = collector;
       },
     });
   }
