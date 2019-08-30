@@ -9,7 +9,7 @@
     "esm": "^3.2.25"
   },
   "scripts": {
-    "start": "node bot.js",
+    "start": "node -r esm bot.js",
     "test-game-logic": "node -r esm ./game/test.js"
   }
 }

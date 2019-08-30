@@ -7,6 +7,6 @@
     }
   },
   "rules": {
-    "semi": "error"
+    "semi": 1
   }
 }
