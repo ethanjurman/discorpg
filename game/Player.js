@@ -31,7 +31,7 @@ export class Player {
     const weaponSTAT = getValue(this.WEAPON && this.WEAPON[stat], this);
     return this.ITEMS.reduce(
       (totalSTAT, item) => totalSTAT + getValue(item[stat], this),
-      armorSTAT + weaponSTAT,
+      armorSTAT + weaponSTAT
     );
   }
 
@@ -92,7 +92,7 @@ export class Player {
   }
 
   getAttackPower() {
-    const critChance = this.charging ? this.getCRIT() : this.getCRIT() / 2;
+    const critChance = this.charging ? (this.getCRIT() / 2) : this.getCRIT();
     const isCrit = critChance >= Math.random() * 100;
     const critMultiplier = isCrit ? 2 : 1;
     const chargingMultiplier = this.charging ? 3 : 1;
@@ -123,7 +123,7 @@ export class Player {
       const attackDamage = Math.max(0, attackPower - enemy.getDEF());
       enemy.currentHP -= attackDamage;
       console.log(
-        `${this.name} attacks! deals ${attackDamage} damage to ${enemy.name}`,
+        `${this.name} attacks! deals ${attackDamage} damage to ${enemy.name}`
       );
     }
   }

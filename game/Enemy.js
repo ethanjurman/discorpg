@@ -60,7 +60,7 @@ export class Enemy {
         const attackPower = this.getAttackPower();
         const attackDamage = Math.max(0, attackPower - player.getDefense());
         console.log(
-          `${this.name} attacks! deals ${attackDamage} damage to ${player.name}`,
+          `${this.name} attacks! deals ${attackDamage} damage to ${player.name}`
         );
         player.currentHP -= attackDamage;
       }

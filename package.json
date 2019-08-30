@@ -1,5 +1,5 @@
 {
-  "name": "rpg-bot",
+  "name": "discorpg",
   "version": "1.0.0",
   "description": "RPG discord bot",
   "main": "bot.js",
@@ -9,6 +9,7 @@
     "esm": "^3.2.25"
   },
   "scripts": {
+    "start": "node bot.js",
     "test-game-logic": "node -r esm ./game/test.js"
   }
 }

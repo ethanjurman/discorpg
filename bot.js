@@ -34,7 +34,7 @@ client.on('message', message => {
         .setColor('RED')
         .addField('⚔', 'does a lightning punch', true)
         .addField('🛡', 'powerful normal attack', true)
-        .addField('', 'apples for all!', true),
+        .addField('', 'apples for all!', true)
     );
   }
 

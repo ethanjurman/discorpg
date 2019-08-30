@@ -36,7 +36,7 @@ const readOutHealth = () => {
   console.log('----------------');
   console.log(
     'player(s) health:',
-    f.players.map(p => ({ [p.name]: p.currentHP })),
+    f.players.map(p => ({ [p.name]: p.currentHP }))
   );
   console.log('enemy health:', f.enemy.currentHP);
   console.log('----------------');
