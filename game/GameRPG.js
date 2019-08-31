@@ -1,14 +1,16 @@
 import { Player } from './Player';
 import { Enemy } from './Enemy';
 import { Fight } from './Fight';
-import { ATTACK, BLOCK, CHARGE } from './actions';
-import { WARRIOR, RANGER, THIEF } from './jobs';
+import { ATTACK, BLOCK, CHARGE } from './constants/actions';
+import { WARRIOR, RANGER, THIEF } from './constants/jobs';
 
 export class GameRPG {
-  constructor(messenger) {
+  constructor(campaign, messenger) {
     this.messenger = messenger;
     this.players = [];
     this.fight;
+    this.campaign;
+    this.campaignIndex = 0;
   }
 
   async addPlayer({ id, name, job }) {

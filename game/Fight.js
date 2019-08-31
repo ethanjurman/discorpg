@@ -1,4 +1,4 @@
-import { ATTACK, BLOCK, CHARGE } from './actions';
+import { ATTACK, BLOCK, CHARGE } from './constants/actions';
 
 export class Fight {
   constructor(players, enemy, logger = console.log) {
