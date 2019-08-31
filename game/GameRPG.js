@@ -185,4 +185,43 @@ export class GameRPG {
       },
     });
   }
+
+  async shop() {
+    await this.messenger.makeMessageWithOptions({
+      color: 'GREEN',
+      maxResponses: 1,
+      options: [
+        {
+          emoji: '⚔',
+          title: 'Attack',
+          message: 'Launch an attack at your foes',
+        },
+        {
+          emoji: '🛡',
+          title: 'Block',
+          message:
+            'Take a defensive stance, making it harder to dodge, but increasing defensive power',
+        },
+        {
+          emoji: '🔥',
+          title: 'Charge',
+          message:
+            'Take an offensive stance, making it harder to crit, but increasing attack next turn.',
+        },
+      ],
+      callbackOnResponse: (element, collector, userReactionMap) => {
+        for (const id in userReactionMap) {
+          // start the game if someone selects Start Campaign
+          if (userReactionMap[id] === '⛵') {
+            collector.stop();
+          }
+        }
+      },
+      callbackOnFinish: async collection => {
+        await this.fight.advanceTurn();
+        await this.fight.healthReadout();
+        await this.fightRound();
+      },
+    });
+  }
 }

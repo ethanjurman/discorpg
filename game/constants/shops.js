@@ -1,3 +1,16 @@
-export const MERCHANT = {};
+import { JEWELED_ARMOR, HEAVY_ARMOR, QUICK_ARMOR } from './armor';
+import {
+  HEAVY_AXE,
+  FLAMING_SWORD,
+  JAGGED_DAGGER,
+  POWER_ARROWS,
+} from './weapons';
+import { POWER_RING, HEALTHY_RING, OX_RING, RABBIT_RING } from './items';
+export const MERCHANT = {
+  items: [POWER_RING, HEALTHY_RING, OX_RING, RABBIT_RING],
+};
 
-export const BLACKSMITH = {};
+export const BLACKSMITH = {
+  weapons: [HEAVY_AXE, FLAMING_SWORD, JAGGED_DAGGER, POWER_ARROWS],
+  armor: [JEWELED_ARMOR, HEAVY_ARMOR, QUICK_ARMOR],
+};
