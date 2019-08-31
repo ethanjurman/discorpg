@@ -1,6 +1,8 @@
 const Discord = require('discord.js');
 
-const delay = delay => () => new Promise(resolve => setTimeout(resolve, delay));
+const delay = delay => new Promise(resolve => setTimeout(resolve, delay));
+
+let lastDate = Date.now();
 
 export class Messenger {
   constructor(channel) {
@@ -8,15 +10,15 @@ export class Messenger {
     this.messageQueue = new Promise(resolve => resolve());
   }
 
-  makeMessage(...messages) {
-    messages.reduce(
-      (promiseChain, message) =>
-        promiseChain.then(() => this.channel.send(message)).then(delay(2000)),
-      this.messageQueue
-    );
+  async makeMessage(message, delayMs = 1000) {
+    const newLastDate = Date.now();
+    console.log(newLastDate - lastDate, message);
+    lastDate = newLastDate;
+    await this.channel.send(message);
+    await delay(delayMs);
   }
 
-  makeMessageWithOptions({
+  async makeMessageWithOptions({
     options,
     color,
     maxResponses = 1,
@@ -40,7 +42,7 @@ export class Messenger {
       );
     };
 
-    this.channel
+    await this.channel
       .send(messageToBuild)
       .then(message =>
         emojis

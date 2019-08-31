@@ -8,7 +8,6 @@ export class Fight {
     this.logger = logger;
 
     this.actions = {};
-    this.healthReadout();
   }
 
   isTurnReady() {
@@ -19,33 +18,35 @@ export class Fight {
     this.actions[id] = action;
   }
 
-  advanceTurn() {
+  async advanceTurn() {
     this.turn = this.turn++;
     console.log('ACTIONS:', Object.keys(this.actions));
     console.log('PLAYERS:', this.players.map(player => player.id));
 
-    this.players.forEach(player => {
+    for (const playerIndex in this.players) {
+      const player = this.players[playerIndex];
       const { id } = player;
       if (this.actions[id] === ATTACK) {
-        player.attack(this.enemy);
+        await player.attack(this.enemy);
       }
       player.setCharging(false);
 
       if (this.actions[id] === CHARGE) {
-        this.logger(`${player.name} is charging for their next attack!`);
+        await this.logger(`${player.name} is charging for their next attack!`);
         player.setCharging(true);
       }
 
       if (this.actions[id] === BLOCK) {
-        this.logger(`${player.name} took a defensive stance!`);
+        await this.logger(`${player.name} took a defensive stance!`);
         player.setBlocking(true);
       }
-    });
+    }
+
     if (this.enemy.currentHP <= 0) {
-      this.logger(`${this.enemy.name} got wrecked`);
+      await this.logger(`${this.enemy.name} got wrecked`);
     } else {
-      this.logger(`${this.enemy.name} turn to attack`);
-      this.enemy.attack(this.players);
+      await this.logger(`${this.enemy.name}'s turn to attack`);
+      await this.enemy.attack(this.players);
     }
 
     // clear blocking
@@ -62,10 +63,11 @@ export class Fight {
     this.actions = {};
   }
 
-  healthReadout() {
-    this.players.map(p => {
-      this.logger(`${p.name}'s HP: ${p.currentHP}`);
-    });
-    this.logger(`enemy health: ${this.enemy.currentHP}`);
+  async healthReadout() {
+    for (const playerIndex in this.players) {
+      const player = this.players[playerIndex];
+      await this.logger(`${player.name}'s HP: ${player.currentHP}`);
+    }
+    await this.logger(`enemy health: ${this.enemy.currentHP}`);
   }
 }

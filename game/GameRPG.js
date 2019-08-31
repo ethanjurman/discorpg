@@ -10,30 +10,30 @@ export class GameRPG {
     this.fight;
   }
 
-  addPlayer({ id, name }) {
+  async addPlayer({ id, name }) {
     const newPlayer = new Player(
       { id, name },
-      this.messenger.makeMessage.bind(this.messenger)
+      await this.messenger.makeMessage.bind(this.messenger)
     );
     // TODO, build intro shop keep
     newPlayer.setWEAPON({ name: 'axe', ATK: 10, CRIT: 10 });
     newPlayer.setARMOR({ name: 'shield', DEF: 5, AGL: 0 });
 
     this.players.push(newPlayer);
-    this.messenger.makeMessage(`${name} has joined the party!`);
+    await this.messenger.makeMessage(`${name} has joined the party!`);
   }
 
-  welcomeMessage() {
-    this.messenger.makeMessage('A new adventure awaits ye!!');
-    this.messenger.makeMessage(
+  async welcomeMessage() {
+    await this.messenger.makeMessage('A new adventure awaits ye!!');
+    await this.messenger.makeMessage(
       'simply type `/join {name}` so we know what to call you!'
     );
-    this.messenger.makeMessage(
+    await this.messenger.makeMessage(
       'to then begin, type `/start game` after all players are ready!'
     );
   }
 
-  startGame() {
+  async startGame() {
     const atk1 = {
       name: 'wing attack',
       numberOfAttacks: 2,
@@ -59,12 +59,12 @@ export class GameRPG {
       enemy1,
       this.messenger.makeMessage.bind(this.messenger)
     );
-    this.fightRound();
+    await this.fight.healthReadout();
+    await this.fightRound();
   }
 
-  fightRound() {
-    this.messenger.makeMessage('Fight thingy');
-    this.messenger.makeMessageWithOptions({
+  async fightRound() {
+    await this.messenger.makeMessageWithOptions({
       color: 'ORANGE',
       maxResponses: this.players.length,
       options: [
@@ -99,10 +99,10 @@ export class GameRPG {
           }
         });
       },
-      callbackOnFinish: collection => {
-        this.fight.advanceTurn();
-        this.fight.healthReadout();
-        this.fightRound();
+      callbackOnFinish: async collection => {
+        await this.fight.advanceTurn();
+        await this.fight.healthReadout();
+        await this.fightRound();
       },
     });
   }

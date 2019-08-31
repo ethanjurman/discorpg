@@ -92,13 +92,13 @@ export class Player {
     }
   }
 
-  getAttackPower() {
+  async getAttackPower() {
     const critChance = this.charging ? this.getCRIT() / 2 : this.getCRIT();
     const isCrit = critChance >= Math.random() * 100;
     const critMultiplier = isCrit ? 2 : 1;
     const chargingMultiplier = this.charging ? 3 : 1;
     if (isCrit) {
-      this.logger(`It's gonna be critical!`);
+      await this.logger(`It's gonna be critical!`);
     }
     return this.getATK() * critMultiplier * chargingMultiplier;
   }
@@ -117,15 +117,17 @@ export class Player {
     return this.getAGL();
   }
 
-  attack(enemy) {
+  async attack(enemy) {
     const enemyDodged = enemy.getAGL() >= Math.random() * 100;
     if (enemyDodged) {
-      this.logger(`${this.name} attacks! ${enemy.name} dodged the attack!`);
+      await this.logger(
+        `${this.name} attacks! ${enemy.name} dodged the attack!`
+      );
     } else {
-      const attackPower = this.getAttackPower();
+      const attackPower = await this.getAttackPower();
       const attackDamage = Math.max(0, attackPower - enemy.getDEF());
       enemy.currentHP -= attackDamage;
-      this.logger(
+      await this.logger(
         `${this.name} attacks! deals ${attackDamage} damage to ${enemy.name}`
       );
     }

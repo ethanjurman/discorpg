@@ -14,7 +14,7 @@ client.once('ready', () => {
 client.on('message', message => {
   const { content, channel, author } = message;
 
-  if (content === 'start bot') {
+  if (content === '/start bot') {
     const messenger = new Messenger(channel);
     const game = new GameRPG(messenger);
     game.welcomeMessage();
