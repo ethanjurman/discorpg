@@ -11,23 +11,15 @@ client.once('ready', () => {
   console.log('READY!');
 });
 
-client.on('message', message => {
+client.on('message', async message => {
   const { content, channel, author } = message;
 
   if (content === '/start bot') {
     const messenger = new Messenger(channel);
     const game = new GameRPG(messenger);
-    game.welcomeMessage();
+    await game.welcomeMessage();
     channelGameMap[channel.id] = game;
-  }
-  if (content.startsWith('/join')) {
-    const name = content.slice(6);
-    const game = channelGameMap[channel.id];
-    game.addPlayer({ id: message.author.id, name });
-  }
-  if (content.startsWith('/start game')) {
-    const game = channelGameMap[channel.id];
-    game.startGame();
+    await game.setupCampaign();
   }
 });
 

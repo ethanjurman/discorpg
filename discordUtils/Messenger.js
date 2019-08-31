@@ -68,9 +68,14 @@ export class Messenger {
             },
             {}
           );
-          callbackOnResponse(element, collector, userReactionMap);
+          const userDataMap = reactions.reduce((userMap, { users }) => {
+            const realUsers = users.filter(user => !user.bot);
+            realUsers.forEach(user => (userMap[user.id] = user));
+            return userMap;
+          }, {});
+          callbackOnResponse(element, collector, userReactionMap, userDataMap);
 
-          if (Object.keys(userReactionMap).length === maxResponses) {
+          if (Object.keys(userReactionMap).length >= maxResponses) {
             collector.stop();
           }
         });
