@@ -24,9 +24,11 @@ export class GameRPG {
   }
 
   welcomeMessage() {
+    this.messenger.makeMessage('A new adventure awaits ye!!');
     this.messenger.makeMessage(
-      'A new adventure awaits ye!!',
-      'simply type `/join {name}` so we know what to call you!',
+      'simply type `/join {name}` so we know what to call you!'
+    );
+    this.messenger.makeMessage(
       'to then begin, type `/start game` after all players are ready!'
     );
   }

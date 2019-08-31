@@ -63,11 +63,9 @@ export class Fight {
   }
 
   healthReadout() {
-    this.logger('----------------');
     this.players.map(p => {
       this.logger(`${p.name}'s HP: ${p.currentHP}`);
     });
     this.logger(`enemy health: ${this.enemy.currentHP}`);
-    this.logger('----------------');
   }
 }
