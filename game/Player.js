@@ -12,11 +12,12 @@ const getValue = (item, player) => {
 };
 
 export class Player {
-  constructor({ id, name }) {
+  constructor({ id, name }, logger) {
     this.id = id;
     this.name = name;
     this.maxHP = 80;
     this.currentHP = 80;
+    this.logger = logger;
 
     this.ARMOR = null;
     this.WEAPON = null;
@@ -92,11 +93,13 @@ export class Player {
   }
 
   getAttackPower() {
-    const critChance = this.charging ? (this.getCRIT() / 2) : this.getCRIT();
+    const critChance = this.charging ? this.getCRIT() / 2 : this.getCRIT();
     const isCrit = critChance >= Math.random() * 100;
     const critMultiplier = isCrit ? 2 : 1;
     const chargingMultiplier = this.charging ? 3 : 1;
-    process.stdout.write(isCrit ? `It's gonna be critical! ` : '');
+    if (isCrit) {
+      this.logger(`It's gonna be critical!`);
+    }
     return this.getATK() * critMultiplier * chargingMultiplier;
   }
 
@@ -117,12 +120,12 @@ export class Player {
   attack(enemy) {
     const enemyDodged = enemy.getAGL() >= Math.random() * 100;
     if (enemyDodged) {
-      console.log(`${this.name} attacks! ${enemy.name} dodged the attack!`);
+      this.logger(`${this.name} attacks! ${enemy.name} dodged the attack!`);
     } else {
       const attackPower = this.getAttackPower();
       const attackDamage = Math.max(0, attackPower - enemy.getDEF());
       enemy.currentHP -= attackDamage;
-      console.log(
+      this.logger(
         `${this.name} attacks! deals ${attackDamage} damage to ${enemy.name}`
       );
     }

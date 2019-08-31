@@ -1,12 +1,19 @@
 const Discord = require('discord.js');
 
+const delay = delay => () => new Promise(resolve => setTimeout(resolve, delay));
+
 export class Messenger {
   constructor(channel) {
     this.channel = channel;
+    this.messageQueue = new Promise(resolve => resolve());
   }
 
-  makeMessage(string) {
-    this.channel.send(string);
+  makeMessage(...messages) {
+    messages.reduce(
+      (promiseChain, message) =>
+        promiseChain.then(() => this.channel.send(message)).then(delay(2000)),
+      this.messageQueue
+    );
   }
 
   makeMessageWithOptions({
@@ -15,7 +22,6 @@ export class Messenger {
     maxResponses = 1,
     callbackOnResponse = () => {},
     callbackOnFinish = () => {},
-    getCollector = () => {},
   }) {
     const messageToBuild = new Discord.RichEmbed().setColor(color);
     options.reduce((message, option) => {
@@ -50,9 +56,23 @@ export class Messenger {
         const collector = message.createReactionCollector(
           reactionFilter(message)
         );
-        collector.on('collect', callbackOnResponse);
+        collector.on('collect', (element, collector) => {
+          const { reactions } = collector.message;
+          const userReactionMap = reactions.reduce(
+            (userMap, { emoji, users }) => {
+              const realUsers = users.filter(user => !user.bot);
+              realUsers.forEach(user => (userMap[user.id] = emoji.name));
+              return userMap;
+            },
+            {}
+          );
+          callbackOnResponse(element, collector, userReactionMap);
+
+          if (Object.keys(userReactionMap).length === maxResponses) {
+            collector.stop();
+          }
+        });
         collector.on('end', callbackOnFinish);
-        getCollector(collector);
       });
   }
 }

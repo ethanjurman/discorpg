@@ -1,12 +1,14 @@
 import { ATTACK, BLOCK, CHARGE } from './actions';
 
 export class Fight {
-  constructor(players, enemy) {
+  constructor(players, enemy, logger = console.log) {
     this.players = players;
     this.enemy = enemy;
     this.turn = 0;
+    this.logger = logger;
 
     this.actions = {};
+    this.healthReadout();
   }
 
   isTurnReady() {
@@ -19,6 +21,9 @@ export class Fight {
 
   advanceTurn() {
     this.turn = this.turn++;
+    console.log('ACTIONS:', Object.keys(this.actions));
+    console.log('PLAYERS:', this.players.map(player => player.id));
+
     this.players.forEach(player => {
       const { id } = player;
       if (this.actions[id] === ATTACK) {
@@ -27,19 +32,19 @@ export class Fight {
       player.setCharging(false);
 
       if (this.actions[id] === CHARGE) {
-        console.log(`${player.name} is charging for their next attack!`);
+        this.logger(`${player.name} is charging for their next attack!`);
         player.setCharging(true);
       }
 
       if (this.actions[id] === BLOCK) {
-        console.log(`${player.name} took a defensive stance!`);
+        this.logger(`${player.name} took a defensive stance!`);
         player.setBlocking(true);
       }
     });
     if (this.enemy.currentHP <= 0) {
-      console.log(`${this.enemy.name} got wrecked`);
+      this.logger(`${this.enemy.name} got wrecked`);
     } else {
-      console.log(`${this.enemy.name} turn to attack`);
+      this.logger(`${this.enemy.name} turn to attack`);
       this.enemy.attack(this.players);
     }
 
@@ -55,5 +60,14 @@ export class Fight {
     });
     // clear actions
     this.actions = {};
+  }
+
+  healthReadout() {
+    this.logger('----------------');
+    this.players.map(p => {
+      this.logger(`${p.name}'s HP: ${p.currentHP}`);
+    });
+    this.logger(`enemy health: ${this.enemy.currentHP}`);
+    this.logger('----------------');
   }
 }
