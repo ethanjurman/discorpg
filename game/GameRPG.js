@@ -36,7 +36,9 @@ export class GameRPG {
     }
 
     this.players.push(newPlayer);
-    await this.messenger.makeMessage(`${name} has joined the party!`);
+    await this.messenger.makeMessage(
+      `${name} the ${job} has joined the party!`
+    );
   }
 
   async welcomeMessage() {
@@ -80,19 +82,19 @@ export class GameRPG {
       options: [
         {
           emoji: '⚔',
-          title: 'Warrior',
+          title: WARRIOR,
           message:
             'Cut a path into your enemies using a blade of hardened steel. Starts with a Sword and Steel Armor',
         },
         {
           emoji: '🏹',
-          title: 'Ranger',
+          title: RANGER,
           message:
             'Take aim at your enemies from afar with your bow and arrow. Starts with Bow and Leather Armor',
         },
         {
           emoji: '🗡',
-          title: 'Thief',
+          title: THIEF,
           message:
             'Use the shadows and strike quick before you are ever seen. Starts with a Dagger and Crit Ring',
         },

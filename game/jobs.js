@@ -1,3 +1,3 @@
-export const WARRIOR = 'WARRIOR';
-export const THIEF = 'THIEF';
-export const RANGER = 'RANGER';
+export const WARRIOR = 'Warrior';
+export const THIEF = 'Thief';
+export const RANGER = 'Ranger';
