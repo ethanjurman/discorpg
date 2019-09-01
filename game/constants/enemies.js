@@ -1,9 +1,9 @@
-import { WING_ATTACK, BITE, TACKLE, DARK_CHARGE } from './attacks';
+import { WING_ATTACK, BITE, TACKLE, DARK_CHARGE, SWIPE } from './attacks';
 
 export const BAT = {
   id: 'bat',
   name: 'Bat',
-  maxHP: 50,
+  maxHP: 10,
   ATK: 10,
   CRIT: 5,
   DEF: 0,

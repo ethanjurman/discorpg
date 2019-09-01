@@ -9,7 +9,7 @@ export const BITE = {
   numberOfAttacks: 1,
   beforeAttack: enemy => enemy.logger('BITE!! (healing hit)'),
   afterAttack: enemy => {
-    enemy.currentHP += enemy.currentHP + 5;
+    enemy.currentHP += 5;
   },
 };
 
