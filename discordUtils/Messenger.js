@@ -59,6 +59,7 @@ export class Messenger {
           reactionFilter(message)
         );
         collector.on('collect', (element, collector) => {
+          console.log('COLLECTED SOMETHING');
           const { reactions } = collector.message;
           const userReactionMap = reactions.reduce(
             (userMap, { emoji, users }) => {
@@ -79,7 +80,14 @@ export class Messenger {
             collector.stop();
           }
         });
-        collector.on('end', callbackOnFinish);
+        collector.on('end', collection => {
+          const userReactionMap = {};
+          collection.forEach(({ users, _emoji }) => {
+            const realUsers = users.filter(user => !user.bot);
+            realUsers.forEach(user => (userReactionMap[user.id] = _emoji.name));
+          });
+          callbackOnFinish(userReactionMap);
+        });
       });
   }
 }

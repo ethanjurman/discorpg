@@ -11,7 +11,7 @@ export class Enemy {
     this.attacks = attacks;
     this.logger = logger;
     // attack structure should be the following
-    // { name, numberOfAttacks, beforeAttack, aftertAttack }
+    // { name, numberOfAttacks, beforeAttack, onHit, afterAttack }
   }
 
   getMaxHP() {
@@ -63,6 +63,9 @@ export class Enemy {
           `${this.name} attacks! ${player.name} dodged the attack!`
         );
       } else {
+        if (turnAttack.onHit) {
+          turnAttack.onHit(this, player);
+        }
         const attackPower = await this.getAttackPower();
         const attackDamage = Math.max(0, attackPower - player.getDefense());
         await this.logger(

@@ -3,7 +3,13 @@ import { Enemy } from './Enemy';
 import { Fight } from './Fight';
 import { ATTACK, BLOCK, CHARGE } from './constants/actions';
 import { WARRIOR, RANGER, THIEF } from './constants/jobs';
-import { ENEMY_BATTLE, START_CAMPAIGN, SHOP } from './constants/events';
+import {
+  ENEMY_BATTLE,
+  START_CAMPAIGN,
+  SHOP,
+  PLAYER_EVENT,
+  MESSAGE,
+} from './constants/events';
 import { WEAPON, ARMOR, ITEM } from './constants/types';
 
 export class GameRPG {
@@ -22,7 +28,6 @@ export class GameRPG {
       { id, name },
       await this.messenger.makeMessage.bind(this.messenger)
     );
-    // TODO, build intro shop keep
     switch (job) {
       case WARRIOR: {
         newPlayer.setWEAPON({ name: 'Sword', ATK: 10, CRIT: 5 });
@@ -74,8 +79,15 @@ export class GameRPG {
         await this.fightRound();
         break;
       case SHOP:
-        const shopItem = campaignItem.items[0];
-        await this.startShop(shopItem);
+        await this.messenger.makeMessage(campaignItem.intro);
+        await this.startShop();
+        break;
+      case PLAYER_EVENT:
+        await this.messenger.makeMessage(campaignItem.intro);
+        await this.playerEvent();
+        break;
+      case MESSAGE:
+        await this.messenger.makeMessage(campaignItem.intro);
         break;
       default:
         console.log(`${campaignItem} is not a valid campaign type`);
@@ -142,7 +154,7 @@ export class GameRPG {
           }
         }
       },
-      callbackOnFinish: async collection => {
+      callbackOnFinish: async () => {
         await this.continueCampaign();
       },
     });
@@ -184,7 +196,7 @@ export class GameRPG {
           }
         });
       },
-      callbackOnFinish: async collection => {
+      callbackOnFinish: async () => {
         await this.fight.advanceTurn();
         await this.fight.healthReadout();
         if (this.fight.enemy.currentHP <= 0) {
@@ -215,12 +227,7 @@ export class GameRPG {
           message: "Don't take item",
         },
       ],
-      callbackOnResponse: (
-        element,
-        collector,
-        userReactionMap,
-        userDataMap
-      ) => {
+      callbackOnResponse: (element, collector, userReactionMap) => {
         for (const id in userReactionMap) {
           if (userReactionMap[id] === emoji) {
             // someone took the item
@@ -245,7 +252,7 @@ export class GameRPG {
           collector.stop();
         }
       },
-      callbackOnFinish: async collection => {
+      callbackOnFinish: async () => {
         const shop = this.campaign[this.campaignIndex];
         if (this.itemIndex >= eventItem.items.length - 1) {
           this.itemIndex = 0;
@@ -254,6 +261,42 @@ export class GameRPG {
           this.itemIndex++;
           await this.startShop(shop[this.itemIndex]);
         }
+      },
+    });
+  }
+
+  async playerEvent() {
+    const eventItem = this.campaign[this.campaignIndex];
+    const { color, options, onResponse, onFinish } = eventItem;
+    const maxResponses = options.reduce(
+      (responses, { maxRespondents }) => responses + maxRespondents
+    );
+    await this.messenger.makeMessageWithOptions({
+      color,
+      maxResponses,
+      options,
+      callbackOnResponse: (
+        element,
+        collector,
+        userReactionMap,
+        userDataMap
+      ) => {
+        const playerIds = Object.keys(userReactionMap);
+        if (
+          playerIds.length >= maxResponses ||
+          playerIds.length >= this.players.length
+        ) {
+          collector.stop();
+        }
+        if (onResponse) {
+          onResponse(userReactionMap, userDataMap);
+        }
+      },
+      callbackOnFinish: async userReactionMap => {
+        if (onFinish) {
+          await onFinish(userReactionMap, this.playersMap);
+        }
+        await this.continueCampaign();
       },
     });
   }

@@ -1,9 +1,16 @@
-import { WING_ATTACK, BITE, TACKLE, SWIPE, FURY_ATTACK } from './attacks';
+import {
+  WING_ATTACK,
+  BITE,
+  TACKLE,
+  SWIPE,
+  FURY_ATTACK,
+  DARK_CHARGE,
+} from './attacks';
 
 export const BAT = {
   id: 'bat',
   name: 'Bat',
-  maxHP: 10,
+  maxHP: 15,
   ATK: 10,
   CRIT: 5,
   DEF: 0,
@@ -41,5 +48,5 @@ export const DEMON = {
   CRIT: 5,
   DEF: 5,
   AGL: 5,
-  attacks: [BITE, FURY_ATTACK],
+  attacks: [BITE, FURY_ATTACK, FURY_ATTACK, FURY_ATTACK, DARK_CHARGE],
 };
