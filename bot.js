@@ -37,18 +37,18 @@ client.on('message', async message => {
     const messenger = new Messenger(channel);
     const campaign = [
       { event: START_CAMPAIGN },
-      {
-        event: ENEMY_BATTLE,
-        enemy: BAT,
-        intro:
-          'A giant bat flies in and you see violent intention in their eyes!',
-      },
-      {
-        event: SHOP,
-        items: [POWER_ARROWS, HEAVY_AXE, JAGGED_DAGGER, FLAMING_SWORD],
-        intro:
-          'A novice blacksmith sees you travel by. He hears of your great adventure and offers some weapons (to hopefully spread his brand!)',
-      },
+      // {
+      //   event: ENEMY_BATTLE,
+      //   enemy: BAT,
+      //   intro:
+      //     'A giant bat flies in and you see violent intention in their eyes!',
+      // },
+      // {
+      //   event: SHOP,
+      //   items: [POWER_ARROWS, HEAVY_AXE, JAGGED_DAGGER, FLAMING_SWORD],
+      //   intro:
+      //     'A novice blacksmith sees you travel by. He hears of your great adventure and offers some weapons (to hopefully spread his brand!)',
+      // },
       {
         event: PLAYER_EVENT,
         color: 'RED',

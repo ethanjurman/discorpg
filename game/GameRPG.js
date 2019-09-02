@@ -269,7 +269,8 @@ export class GameRPG {
     const eventItem = this.campaign[this.campaignIndex];
     const { color, options, onResponse, onFinish } = eventItem;
     const maxResponses = options.reduce(
-      (responses, { maxRespondents }) => responses + maxRespondents
+      (responses, { maxRespondents }) => responses + maxRespondents,
+      0
     );
     await this.messenger.makeMessageWithOptions({
       color,
