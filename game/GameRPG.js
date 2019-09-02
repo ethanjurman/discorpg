@@ -11,6 +11,9 @@ import {
   MESSAGE,
 } from './constants/events';
 import { WEAPON, ARMOR, ITEM } from './constants/types';
+import { SWORD, BOW, DAGGER } from './constants/weapons';
+import { CRIT_RING } from './constants/items';
+import { STEEL_ARMOR, LEATHER_ARMOR } from './constants/armor';
 
 export class GameRPG {
   constructor(campaign, messenger) {
@@ -23,25 +26,25 @@ export class GameRPG {
     this.itemIndex = 0;
   }
 
-  async addPlayer({ id, name, job }) {
+  async addPlayer({ id, name, user, job }) {
     const newPlayer = new Player(
-      { id, name },
+      { id, name, user },
       await this.messenger.makeMessage.bind(this.messenger)
     );
     switch (job) {
       case WARRIOR: {
-        newPlayer.setWEAPON({ name: 'Sword', ATK: 10, CRIT: 5 });
-        newPlayer.setARMOR({ name: 'Steel Armor', DEF: 8, AGL: 0 });
+        newPlayer.setWEAPON(SWORD);
+        newPlayer.setARMOR(STEEL_ARMOR);
         break;
       }
       case RANGER: {
-        newPlayer.setWEAPON({ name: 'Bow', ATK: 10, CRIT: 5 });
-        newPlayer.setARMOR({ name: 'Leather Armor', DEF: 5, AGL: 5 });
+        newPlayer.setWEAPON(BOW);
+        newPlayer.setARMOR(LEATHER_ARMOR);
         break;
       }
       case THIEF: {
-        newPlayer.setWEAPON({ name: 'Dagger', ATK: 7, CRIT: 10 });
-        newPlayer.addITEM({ name: 'Crit Ring', CRIT: 5 });
+        newPlayer.setWEAPON(DAGGER);
+        newPlayer.addITEM(CRIT_RING);
         break;
       }
     }
@@ -142,16 +145,18 @@ export class GameRPG {
             continue;
           }
 
-          const name = userDataMap[id].toString();
+          const user = userDataMap[id];
+          const name = user.toString();
           if (userReactionMap[id] === '⚔') {
-            this.addPlayer({ id, name, job: WARRIOR });
+            await this.addPlayer({ id, name, user, job: WARRIOR });
           }
           if (userReactionMap[id] === '🏹') {
-            this.addPlayer({ id, name, job: RANGER });
+            await this.addPlayer({ id, name, user, job: RANGER });
           }
           if (userReactionMap[id] === '🗡') {
-            this.addPlayer({ id, name, job: THIEF });
+            await this.addPlayer({ id, name, user, job: THIEF });
           }
+          await this.messenger.makePlayerMessage(this.playersMap[id]);
         }
       },
       callbackOnFinish: async () => {
@@ -199,6 +204,9 @@ export class GameRPG {
       callbackOnFinish: async () => {
         await this.fight.advanceTurn();
         await this.fight.healthReadout();
+        for (const playerIndex in this.players) {
+          await this.players[playerIndex].updatePlayerMessage();
+        }
         if (this.fight.enemy.currentHP <= 0) {
           await this.continueCampaign();
         } else {
@@ -254,6 +262,9 @@ export class GameRPG {
       },
       callbackOnFinish: async () => {
         const shop = this.campaign[this.campaignIndex];
+        for (const playerIndex in this.players) {
+          await this.players[playerIndex].updatePlayerMessage();
+        }
         if (this.itemIndex >= eventItem.items.length - 1) {
           this.itemIndex = 0;
           await this.continueCampaign();
@@ -294,6 +305,9 @@ export class GameRPG {
         }
       },
       callbackOnFinish: async userReactionMap => {
+        for (const playerIndex in this.players) {
+          await this.players[playerIndex].updatePlayerMessage();
+        }
         if (onFinish) {
           await onFinish(userReactionMap, this.playersMap);
         }

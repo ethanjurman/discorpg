@@ -18,6 +18,13 @@ export class Messenger {
     await delay(delayMs);
   }
 
+  async makePlayerMessage(player) {
+    const messageToBuild = player.getPlayerMessage();
+    const message = await this.channel.send(messageToBuild);
+    player.playerMessage = message;
+    await message.pin();
+  }
+
   async makeMessageWithOptions({
     options,
     color,
@@ -59,7 +66,6 @@ export class Messenger {
           reactionFilter(message)
         );
         collector.on('collect', (element, collector) => {
-          console.log('COLLECTED SOMETHING');
           const { reactions } = collector.message;
           const userReactionMap = reactions.reduce(
             (userMap, { emoji, users }) => {

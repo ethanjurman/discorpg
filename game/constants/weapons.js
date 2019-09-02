@@ -1,4 +1,34 @@
 import { WEAPON } from './types';
+
+export const SWORD = {
+  name: 'Sword',
+  type: WEAPON,
+  ATK: 10,
+  CRIT: 5,
+  emoji: '⚔',
+  description:
+    'ATK: 10, CRIT: 5. Basic sword. Good for swinging _and_ stabbing!',
+};
+
+export const BOW = {
+  name: 'Bow',
+  type: WEAPON,
+  ATK: 10,
+  CRIT: 5,
+  emoji: '🏹',
+  description:
+    'ATK: 10, CRIT: 5. Everything is target practice when you got arrows!',
+};
+
+export const DAGGER = {
+  name: 'Dagger',
+  type: WEAPON,
+  ATK: 7,
+  CRIT: 10,
+  emoji: '🗡',
+  description: "ATK 7, CRIT 10. Watch out... it's sharp!",
+};
+
 export const HEAVY_AXE = {
   name: 'Heavy Axe',
   type: WEAPON,

@@ -1,3 +1,5 @@
+const Discord = require('discord.js');
+
 const getValue = (item, player) => {
   // if item is a function, call function with player
   if (typeof item === 'function') {
@@ -12,12 +14,14 @@ const getValue = (item, player) => {
 };
 
 export class Player {
-  constructor({ id, name }, logger) {
+  constructor({ id, name, user }, logger) {
     this.id = id;
     this.name = name;
+    this.user = user;
     this.maxHP = 80;
     this.currentHP = 80;
     this.logger = logger;
+    this.playerMessage = null;
 
     this.ARMOR = null;
     this.WEAPON = null;
@@ -92,6 +96,10 @@ export class Player {
     }
   }
 
+  setPlayerMessage(message) {
+    this.playerMessage = message;
+  }
+
   async getAttackPower() {
     const critChance = this.charging ? this.getCRIT() / 2 : this.getCRIT();
     const isCrit = critChance >= Math.random() * 100;
@@ -130,6 +138,49 @@ export class Player {
       await this.logger(
         `${this.name} attacks! deals ${attackDamage} damage to ${enemy.name}`
       );
+    }
+  }
+
+  getPlayerMessage() {
+    const { WEAPON: weapon, ARMOR: armor, ITEMS: items } = this;
+    console.log({ items });
+    const messageToBuild = new Discord.RichEmbed()
+      .setColor('GOLD')
+      .setAuthor(this.name, this.user.avatarURL)
+      .setDescription(
+        `
+    HP: ${this.getCurrentHP()} / ${this.getMaxHP()}
+    ATK: ${this.getATK()}
+    CRIT: ${this.getCRIT()}
+    DEF: ${this.getDEF()}
+    AGL: ${this.getAGL()}
+    \n
+    `
+      )
+      .addField(
+        'Weapon',
+        weapon
+          ? `${weapon.emoji} ${weapon.name}: ${weapon.description}`
+          : 'None'
+      )
+      .addField(
+        'Armor',
+        armor ? `${armor.emoji} ${armor.name}: ${armor.description}` : 'None'
+      )
+      .addField(
+        'Items',
+        items.reduce(
+          (finalString, item) =>
+            finalString + `${item.emoji} ${item.name}: ${item.description}\n`,
+          ''
+        ) || 'None'
+      );
+    return messageToBuild;
+  }
+
+  async updatePlayerMessage() {
+    if (this.playerMessage) {
+      await this.playerMessage.edit(this.getPlayerMessage());
     }
   }
 }

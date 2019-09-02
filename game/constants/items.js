@@ -1,5 +1,13 @@
 import { ITEM } from './types';
 
+export const CRIT_RING = {
+  name: 'Crit Ring',
+  type: ITEM,
+  CRIT: 5,
+  emoji: '💍',
+  description: "CRIT +5. Aim for it's eyes!",
+};
+
 export const POWER_RING = {
   name: 'Power Ring',
   type: ITEM,

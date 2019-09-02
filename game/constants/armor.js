@@ -1,4 +1,23 @@
 import { ARMOR } from './types';
+
+export const STEEL_ARMOR = {
+  name: 'Steel Armor',
+  type: ARMOR,
+  DEF: 10,
+  emoji: '🛡',
+  description: "DEF 10. It's made tough.",
+};
+
+export const LEATHER_ARMOR = {
+  name: 'Leather Armor',
+  type: ARMOR,
+  DEF: 5,
+  AGL: 5,
+  emoji: '🛡',
+  description:
+    "DEF 5, AGL: 5. It's not the most durable thing, but at least you can move in it.",
+};
+
 export const JEWELED_ARMOR = {
   name: 'Jeweled Armor',
   type: ARMOR,
