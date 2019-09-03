@@ -143,11 +143,12 @@ export class Player {
 
   getPlayerMessage() {
     const { WEAPON: weapon, ARMOR: armor, ITEMS: items } = this;
+    const playerHealthColor = this.currentHP > 30 ? 'GREEN' : 'RED';
     const messageToBuild = new Discord.RichEmbed()
-      .setColor('GOLD')
-      .setAuthor(this.name, this.user.avatarURL)
+      .setColor(playerHealthColor)
       .setDescription(
         `
+        ${this.name}
     HP: ${this.getCurrentHP()} / ${this.getMaxHP()}
     ATK: ${this.getATK()}
     CRIT: ${this.getCRIT()}
