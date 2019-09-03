@@ -20,8 +20,6 @@ export class Fight {
 
   async advanceTurn() {
     this.turn = this.turn++;
-    console.log('ACTIONS:', Object.keys(this.actions));
-    console.log('PLAYERS:', this.players.map(player => player.id));
 
     for (const playerIndex in this.players) {
       const player = this.players[playerIndex];
@@ -54,11 +52,13 @@ export class Fight {
       player.setBlocking(false);
     });
     // remove dead players
-    this.players.forEach((player, index) => {
+    for (const index in this.players) {
+      const player = this.players[index];
       if (player.currentHP <= 0) {
+        await this.logger(`💀 ${player.name} has been slained!`);
         this.players.splice(index, 1);
       }
-    });
+    }
     // clear actions
     this.actions = {};
   }

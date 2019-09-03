@@ -33,7 +33,7 @@ client.once('ready', () => {
 
 client.on('message', async message => {
   const { content, channel } = message;
-  if (content === '/start bot') {
+  if (content === '!discorpg') {
     const messenger = new Messenger(channel);
     const campaign = [
       { event: START_CAMPAIGN },

@@ -143,7 +143,6 @@ export class Player {
 
   getPlayerMessage() {
     const { WEAPON: weapon, ARMOR: armor, ITEMS: items } = this;
-    console.log({ items });
     const messageToBuild = new Discord.RichEmbed()
       .setColor('GOLD')
       .setAuthor(this.name, this.user.avatarURL)

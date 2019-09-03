@@ -59,10 +59,6 @@ export class GameRPG {
   async continueCampaign() {
     this.campaignIndex++;
     const campaignItem = this.campaign[this.campaignIndex];
-    console.log({
-      campaignIndex: this.campaignIndex,
-      event: campaignItem.event,
-    });
     switch (campaignItem.event) {
       case START_CAMPAIGN:
         this.setupCampaign();
@@ -203,6 +199,10 @@ export class GameRPG {
       },
       callbackOnFinish: async () => {
         await this.fight.advanceTurn();
+        if (this.fight.players.length === 0) {
+          await this.messenger.makeMessage('All the players have fallen.');
+          return;
+        }
         await this.fight.healthReadout();
         for (const playerIndex in this.players) {
           await this.players[playerIndex].updatePlayerMessage();
