@@ -1,6 +1,6 @@
 # DISCORPG
 
-_pronouced dis-core-porge(?)_
+_pronouced dis-core-pppggge(?)_
 
 A discord bot, that manages and runs an RPG game!
 
