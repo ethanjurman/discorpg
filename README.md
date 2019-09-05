@@ -76,6 +76,14 @@ starts a shop encounter. Only one player can grab each item. Each item shows up 
 - params: [`message`](#message),
 just posts a message, then continues to next campaign event.
 
+```js
+{
+  event: MESSAGE,
+  message:
+    'Congratulations! You were victorious over your challenges, and you reap the rewards!',
+}
+```
+
 ### `PLAYER_EVENT`
 - params: [`color`](#color), [`intro`](#intro-message), [`options`](#options), [`onFinish`](#onFinish)
 starts a player event that is highly customizable.
