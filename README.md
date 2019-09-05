@@ -36,7 +36,7 @@ A campaign is an Array of [Event](#event-object) objects. You must pass through 
 An event object contains an [eventType](#eventtype-enum), [intro](#intro-string), and a number of other options depending on the [eventType](#eventtype-enum).
 
 ## EventType (`Enum`)
-EventType can be one of the following - [`START_CAMPAIGN`](#start_campaign), [`ENEMY_BATTLE`](#enemy_battle), [`SHOP`](#shop), [`MESSAGE`](#message), [`PLAYER_EVENT`](#player-event)
+EventType can be one of the following - [`START_CAMPAIGN`](#start_campaign), [`ENEMY_BATTLE`](#enemy_battle), [`SHOP`](#shop), [`MESSAGE`](#message), [`PLAYER_EVENT`](#player_event)
 
 ### `START_CAMPAIGN`
 - params: none
