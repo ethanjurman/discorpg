@@ -1,3 +1,4 @@
+// LEGACY
 export class Enemy {
   constructor({ id, name, maxHP, ATK, CRIT, DEF, AGL, attacks }, logger) {
     this.id = id;

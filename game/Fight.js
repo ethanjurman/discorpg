@@ -1,3 +1,4 @@
+// LEGACY
 import { ATTACK, BLOCK, CHARGE } from './constants/actions';
 
 export class Fight {
@@ -48,7 +49,7 @@ export class Fight {
     }
 
     // clear blocking
-    this.players.forEach(player => {
+    this.players.forEach((player) => {
       player.setBlocking(false);
     });
     // remove dead players

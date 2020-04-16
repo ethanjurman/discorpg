@@ -1,3 +1,4 @@
+// LEGACY
 const Discord = require('discord.js');
 
 const getValue = (item, player) => {
