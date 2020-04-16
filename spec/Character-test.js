@@ -12,7 +12,7 @@ import {
   setType,
   setHealth,
   NPC_TYPE,
-} from '../game/Character';
+} from '../game/Objects/Character';
 
 describe('Character.js', () => {
   const dialog = [];
