@@ -3,8 +3,8 @@ export const SHOP = 'SHOP';
 
 export class Action {
   constructor({
-    type = '',
     name = '',
+    type = '',
     description = '',
     emoji = '',
     onAction = null,
@@ -27,14 +27,16 @@ export const assertAction = (action) => {
   }
 };
 
-export const getType = (action) => {
-  assertAction(action);
-  return action.type;
-};
+// getters
 
 export const getName = (action) => {
   assertAction(action);
   return action.name;
+};
+
+export const getType = (action) => {
+  assertAction(action);
+  return action.type;
 };
 
 export const getDescription = (action) => {
@@ -52,14 +54,16 @@ export const getOnAction = (action) => {
   return action.onAction;
 };
 
-export const setType = (action, newType) => {
-  assertAction(action);
-  return new Action({ ...action, type: newType });
-};
+// setters
 
 export const setName = (action, newName) => {
   assertAction(action);
   return new Action({ ...action, name: newName });
+};
+
+export const setType = (action, newType) => {
+  assertAction(action);
+  return new Action({ ...action, type: newType });
 };
 
 export const setDescription = (action, newDescription) => {

@@ -118,42 +118,42 @@ describe('Character.js', () => {
   });
 
   describe('#setType', () => {
-    it('should let you change name with method', () => {
+    it('should let you change type with method', () => {
       const newTestCharacter = setType(testCharacter, NPC_TYPE);
       expect(getType(newTestCharacter)).toBe(NPC_TYPE);
     });
   });
 
   describe('#setMaxHP', () => {
-    it('should let you change name with method', () => {
+    it('should let you change max hp with method', () => {
       const newTestCharacter = setMaxHP(testCharacter, 40);
       expect(getMaxHP(newTestCharacter)).toBe(40);
     });
   });
 
   describe('#setCurrentHP', () => {
-    it('should let you change name with method', () => {
+    it('should let you change current hp with method', () => {
       const newTestCharacter = setCurrentHP(testCharacter, 40);
       expect(getCurrentHP(newTestCharacter)).toBe(40);
     });
   });
 
   describe('#setStr', () => {
-    it('should let you change name with method', () => {
+    it('should let you change str with method', () => {
       const newTestCharacter = setStr(testCharacter, 1.3);
       expect(getStr(newTestCharacter)).toBe(1.3);
     });
   });
 
   describe('#setDex', () => {
-    it('should let you change name with method', () => {
+    it('should let you change dex with method', () => {
       const newTestCharacter = setDex(testCharacter, 1.3);
       expect(getDex(newTestCharacter)).toBe(1.3);
     });
   });
 
   describe('#setInt', () => {
-    it('should let you change name with method', () => {
+    it('should let you change int with method', () => {
       const newTestCharacter = setInt(testCharacter, 1.3);
       expect(getInt(newTestCharacter)).toBe(1.3);
     });
