@@ -1,3 +1,5 @@
+import { createUniqueId, setObjectToId } from './methods';
+
 export const BATTLE = 'BATTLE';
 export const SHOP = 'SHOP';
 
@@ -8,13 +10,16 @@ export class Action {
     description = '',
     emoji = '',
     onAction = null,
+    id = createUniqueId(),
   } = {}) {
     this.type = type;
     this.name = name;
     this.description = description;
     this.emoji = emoji;
     this.onAction = onAction;
+    this.id = id;
     this.__objectName = 'ACTION';
+    setObjectToId(id, this);
     Object.freeze(this);
   }
 }

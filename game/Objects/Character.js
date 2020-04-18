@@ -1,3 +1,5 @@
+import { createUniqueId, setObjectToId } from './methods';
+
 export const PLAYER_TYPE = 'PLAYER_TYPE';
 export const NPC_TYPE = 'NPC_TYPE';
 export const ENEMY_TYPE = 'ENEMY_TYPE';
@@ -51,6 +53,7 @@ export class Character {
     int = 1,
     actions = [],
     items = [],
+    id = createUniqueId(),
   } = {}) {
     this.name = name;
     this.type = type;
@@ -61,7 +64,9 @@ export class Character {
     this.int = int;
     this.actions = actions;
     this.items = items;
+    this.id = id;
     this.__objectName = 'CHARACTER';
+    setObjectToId(id, this);
     Object.freeze(this);
   }
 }

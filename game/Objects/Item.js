@@ -1,3 +1,5 @@
+import { createUniqueId, setObjectToId } from './methods';
+
 export const WEAPON_TYPE = 'WEAPON_TYPE';
 export const EQUIPMENT_TYPE = 'EQUIPMENT_TYPE';
 export const USE_TYPE = 'USE_TYPE';
@@ -10,6 +12,7 @@ export class Item {
     strMod = null,
     dexMod = null,
     intMod = null,
+    id = createUniqueId(),
   } = {}) {
     this.name = name;
     this.type = type;
@@ -17,7 +20,9 @@ export class Item {
     this.strMod = strMod;
     this.dexMod = dexMod;
     this.intMod = intMod;
+    this.id = id;
     this.__objectName = 'ITEM';
+    setObjectToId(id, this);
     Object.freeze(this);
   }
 }
