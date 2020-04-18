@@ -33,7 +33,7 @@ int: The characters intelligence.
 
 actions: The characters actions. When the character is queued up, they can
   select from a number of actions depending on the scene. For instance, in
-  BATTLE_SCENE scecnes, any action that has type BATTLE_SCENE will display.
+  BATTLE scecnes, any action that has type BATTLE will display.
   If more the character is player controlled, options for which action is 
   displayed. Otherwise one will get choosen at random.
 
