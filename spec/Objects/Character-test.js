@@ -4,25 +4,34 @@ import {
   PLAYER_TYPE,
   getName,
   getType,
-  getDialog,
   getActions,
   getItems,
-  getHealth,
+  getMaxHP,
   setName,
   setType,
-  setHealth,
+  setMaxHP,
   NPC_TYPE,
-} from '../game/Objects/Character';
+  getCurrentHP,
+  setCurrentHP,
+  getStr,
+  getInt,
+  getDex,
+  setStr,
+  setInt,
+  setDex,
+} from '../../game/Objects/Character';
 
 describe('Character.js', () => {
-  const dialog = [];
   const actions = [];
   const items = [];
   const testCharacter = new Character({
     name: 'DERK',
     type: PLAYER_TYPE,
-    health: 150,
-    dialog: dialog,
+    maxHP: 150,
+    currentHP: 50,
+    str: 1.5,
+    dex: 1.1,
+    int: 0.6,
     actions: actions,
     items: items,
   });
@@ -57,15 +66,33 @@ describe('Character.js', () => {
     });
   });
 
-  describe('#getHealth', () => {
-    it('should get Health', () => {
-      expect(getHealth(testCharacter)).toBe(150);
+  describe('#getMaxHP', () => {
+    it('should get max HP', () => {
+      expect(getMaxHP(testCharacter)).toBe(150);
     });
   });
 
-  describe('#getDialog', () => {
-    it('should get Dialog', () => {
-      expect(getDialog(testCharacter)).toBe(dialog);
+  describe('#getCurrentHP', () => {
+    it('should get current HP', () => {
+      expect(getCurrentHP(testCharacter)).toBe(50);
+    });
+  });
+
+  describe('#getStr', () => {
+    it('should get str', () => {
+      expect(getStr(testCharacter)).toBe(1.5);
+    });
+  });
+
+  describe('#getDex', () => {
+    it('should get dex', () => {
+      expect(getDex(testCharacter)).toBe(1.1);
+    });
+  });
+
+  describe('#getInt', () => {
+    it('should get int', () => {
+      expect(getInt(testCharacter)).toBe(0.6);
     });
   });
 
@@ -97,15 +124,39 @@ describe('Character.js', () => {
     });
   });
 
-  describe('#setHealth', () => {
+  describe('#setMaxHP', () => {
     it('should let you change name with method', () => {
-      const newTestCharacter = setHealth(testCharacter, 40);
-      expect(getHealth(newTestCharacter)).toBe(40);
+      const newTestCharacter = setMaxHP(testCharacter, 40);
+      expect(getMaxHP(newTestCharacter)).toBe(40);
     });
   });
 
-  xdescribe('#setDialog', () => {
-    // NEED TO CREATE DIALOG OBJECT
+  describe('#setCurrentHP', () => {
+    it('should let you change name with method', () => {
+      const newTestCharacter = setCurrentHP(testCharacter, 40);
+      expect(getCurrentHP(newTestCharacter)).toBe(40);
+    });
+  });
+
+  describe('#setStr', () => {
+    it('should let you change name with method', () => {
+      const newTestCharacter = setStr(testCharacter, 1.3);
+      expect(getStr(newTestCharacter)).toBe(1.3);
+    });
+  });
+
+  describe('#setDex', () => {
+    it('should let you change name with method', () => {
+      const newTestCharacter = setDex(testCharacter, 1.3);
+      expect(getDex(newTestCharacter)).toBe(1.3);
+    });
+  });
+
+  describe('#setInt', () => {
+    it('should let you change name with method', () => {
+      const newTestCharacter = setInt(testCharacter, 1.3);
+      expect(getInt(newTestCharacter)).toBe(1.3);
+    });
   });
 
   xdescribe('#setActions', () => {

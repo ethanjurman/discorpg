@@ -11,7 +11,7 @@
   "scripts": {
     "start": "node -r esm bot.js",
     "test-game-logic": "node -r esm ./game/test.js",
-    "test": "jasmine --require=esm ./**/*-test.js"
+    "test": "jasmine --require=esm --random=false ./**/*-test.js"
   },
   "devDependencies": {
     "jasmine": "^3.5.0"
